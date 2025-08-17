@@ -1,0 +1,44 @@
+status: "success" → the API call worked.
+
+data.city/state/country: self-explanatory location labels.
+
+location
+
+type: "Point" → GeoJSON type.
+
+coordinates: [106.6519, 10.9804] → [longitude, latitude] (note the order!).
+
+current.pollution
+
+ts: "2025-08-17T07:00:00.000Z" → timestamp in UTC (that’s 14:00 local in UTC+7).
+aqius: 33 → U.S. AQI; Good (0–50).
+mainus: "p2" → primary pollutant under US AQI = PM2.5.
+aqicn: 9 → China AQI value (another standard).
+maincn: "p2" → primary pollutant per CN AQI (also PM2.5).
+
+Pollutant code legend
+
+p2 = PM2.5 (fine particles)
+p1 = PM10
+o3 = Ozone
+n2 = NO₂
+s2 = SO₂
+co = CO
+
+current.weather
+
+ts: same format as above (UTC).
+
+ic: "04d" → weather icon code (broken clouds, day).
+
+hu: 72 → humidity %.
+
+pr: 1007 → pressure hPa.
+
+tp: 28 → air temperature °C.
+
+heat_index: 30 → “feels like” °C (accounts for temp + humidity).
+
+wd: 282 → wind direction in degrees (0°=N, 90°=E…); ≈ WNW.
+
+ws: 6.07 → wind speed m/s ≈ 21.852 km/h (6.07×3.6).
