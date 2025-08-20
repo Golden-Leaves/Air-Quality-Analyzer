@@ -27,6 +27,7 @@ def collect_data():
 @app.route("/")
 def index():
     print("Hi hi hi I'm online.")
+    return
         
         
 def get_air_data(api_key,country,state,city) -> AirData:
