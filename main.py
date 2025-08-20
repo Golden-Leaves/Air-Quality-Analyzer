@@ -8,6 +8,7 @@ import requests
 from datetime import datetime,timezone,timedelta
 import time
 from db_models import db,AirData,Weather
+import threading
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///air.db'
@@ -15,6 +16,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 with app.app_context():
     db.create_all()
+    
+def collect_data():
+    while True:
+        print("Fetching Data...")
+        main()
+        time.sleep(900)
+        
+@app.route("/")
+def index():
+    print("Hi hi hi I'm online.")
+        
+        
 def get_air_data(api_key,country,state,city) -> AirData:
         params = {"key":api_key,
               "country":country,
@@ -24,7 +37,6 @@ def get_air_data(api_key,country,state,city) -> AirData:
         # response = requests.get("http://api.airvisual.com/v2/cities",params=params)
         response.raise_for_status()
         data = response.json()
-        print(data)
         data = data["data"]
         pollution = data["current"]["pollution"]
         weather = data["current"]["weather"]
@@ -122,4 +134,6 @@ def main():
         db.session.add_all([air_data,weather_data])
         db.session.commit()
 if __name__ == "__main__":
-    main()
+    t = threading.Thread(target=collect_data)
+    t.daemon = True
+    t.start()
