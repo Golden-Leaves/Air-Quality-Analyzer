@@ -9,6 +9,7 @@ from datetime import datetime,timezone,timedelta
 import time
 from db_models import db,AirData,Weather
 import threading
+import gunicorn
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///air.db'
